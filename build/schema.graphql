@@ -1,0 +1,8 @@
+type PairCreated @entity {
+  id: ID!
+  token0: Bytes
+  token1: Bytes
+  pair: Bytes
+  stable: Boolean!
+  param4: Int
+}
