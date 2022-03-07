@@ -1,8 +1,21 @@
-type PairCreated @entity {
+type Token @entity {
   id: ID!
-  token0: Bytes
-  token1: Bytes
-  pair: Bytes
-  stable: Boolean!
-  param4: Int
+  address: Bytes
+  symbol: String
+  name: String
+  decimals: BigInt
+  chainId: Int 
+  logoURI: String
+  isWhitelisted: Boolean
 }
+
+type Pair @entity {
+  id: ID!
+  token0: Token
+  token1: Token
+  isStable: Boolean
+  totalSupply: BigDecimal
+  reserve0: BigDecimal
+  reserve1: BigDecimal
+}
+

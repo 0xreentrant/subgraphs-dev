@@ -14,10 +14,17 @@ dataSources:
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - PairCreated
+        - Pool
+        - Token
       abis:
         - name: BaseV1Factory
           file: BaseV1Factory/abis/BaseV1Factory.json
+        - name: ERC20
+          file: BaseV1Factory/abis/ERC20.json
+        - name: ERC20SymbolBytes
+          file: BaseV1Factory/abis/ERC20SymbolBytes.json
+        - name: ERC20NameBytes
+          file: BaseV1Factory/abis/ERC20NameBytes.json
       eventHandlers:
         - event: PairCreated(indexed address,indexed address,bool,address,uint256)
           handler: handlePairCreated

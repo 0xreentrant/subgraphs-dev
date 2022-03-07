@@ -7,23 +7,14 @@ import { ERC20NameBytes } from '../../generated/BaseV1Factory/ERC20NameBytes'
 import { ERC20SymbolBytes } from '../../generated/BaseV1Factory/ERC20SymbolBytes'
 import { Token } from '../../generated/schema'
 
-export function getToken(address: Address): Token | null {
+export function getToken(address: Address): Token {
   let token = Token.load(address.toHex())
 
   if (token === null) {
     token = new Token(address.toHex())
     token.symbol = getSymbol(address)
     token.name = getName(address)
-    const decimals = getDecimals(address)
-
-    // TODO: Does this ever happen?
-    if (decimals === null) {
-      log.warning('Demicals for token {} was null', [address.toHex()])
-      return null
-    }
-
-    token.decimals = decimals
-
+    token.decimals = getDecimals(address)
     token.save()
   }
 
