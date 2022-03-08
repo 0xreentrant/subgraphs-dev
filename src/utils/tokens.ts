@@ -1,6 +1,6 @@
 // from sushiswap's subgraph
 import { Address, BigInt, log } from '@graphprotocol/graph-ts'
-import { NULL_CALL_RESULT_VALUE } from 'const'
+import { NULL_CALL_RESULT_VALUE } from '../../packages/constants'
 
 import { ERC20 } from '../../generated/BaseV1Factory/ERC20'
 import { ERC20NameBytes } from '../../generated/BaseV1Factory/ERC20NameBytes'

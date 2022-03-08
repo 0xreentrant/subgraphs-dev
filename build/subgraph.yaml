@@ -14,11 +14,13 @@ dataSources:
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - Pool
+        - Pair
         - Token
       abis:
         - name: BaseV1Factory
           file: BaseV1Factory/abis/BaseV1Factory.json
+        - name: Pair
+          file: BaseV1Factory/node_modules/@sushiswap/core/build/abi/UniswapV2Pair.json
         - name: ERC20
           file: BaseV1Factory/abis/ERC20.json
         - name: ERC20SymbolBytes
@@ -29,3 +31,33 @@ dataSources:
         - event: PairCreated(indexed address,indexed address,bool,address,uint256)
           handler: handlePairCreated
       file: BaseV1Factory/BaseV1Factory.wasm
+templates:
+  - kind: ethereum/contract
+    name: Pair
+    network: fantom
+    source:
+      abi: Pair
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      file: templates/Pair/Pair.wasm
+      entities:
+        - Pair
+        - Sync
+      abis:
+        - name: BaseV1Factory
+          file: Pair/abis/BaseV1Factory.json
+        - name: Pair
+          file: Pair/node_modules/@sushiswap/core/build/abi/UniswapV2Pair.json
+        - name: ERC20
+          file: Pair/abis/ERC20.json
+        - name: ERC20SymbolBytes
+          file: Pair/abis/ERC20SymbolBytes.json
+        - name: ERC20NameBytes
+          file: Pair/abis/ERC20NameBytes.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: onTransfer
+        - event: Sync(uint112,uint112)
+          handler: onSync

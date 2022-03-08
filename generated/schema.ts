@@ -15,6 +15,14 @@ export class Token extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
+
+    this.set("address", Value.fromBytes(Bytes.empty()));
+    this.set("symbol", Value.fromString(""));
+    this.set("name", Value.fromString(""));
+    this.set("decimals", Value.fromBigInt(BigInt.zero()));
+    this.set("chainId", Value.fromI32(0));
+    this.set("logoURI", Value.fromString(""));
+    this.set("isWhitelisted", Value.fromBoolean(false));
   }
 
   save(): void {
@@ -43,72 +51,40 @@ export class Token extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get address(): Bytes | null {
+  get address(): Bytes {
     let value = this.get("address");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBytes();
-    }
+    return value!.toBytes();
   }
 
-  set address(value: Bytes | null) {
-    if (!value) {
-      this.unset("address");
-    } else {
-      this.set("address", Value.fromBytes(<Bytes>value));
-    }
+  set address(value: Bytes) {
+    this.set("address", Value.fromBytes(value));
   }
 
-  get symbol(): string | null {
+  get symbol(): string {
     let value = this.get("symbol");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toString();
-    }
+    return value!.toString();
   }
 
-  set symbol(value: string | null) {
-    if (!value) {
-      this.unset("symbol");
-    } else {
-      this.set("symbol", Value.fromString(<string>value));
-    }
+  set symbol(value: string) {
+    this.set("symbol", Value.fromString(value));
   }
 
-  get name(): string | null {
+  get name(): string {
     let value = this.get("name");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toString();
-    }
+    return value!.toString();
   }
 
-  set name(value: string | null) {
-    if (!value) {
-      this.unset("name");
-    } else {
-      this.set("name", Value.fromString(<string>value));
-    }
+  set name(value: string) {
+    this.set("name", Value.fromString(value));
   }
 
-  get decimals(): BigInt | null {
+  get decimals(): BigInt {
     let value = this.get("decimals");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigInt();
-    }
+    return value!.toBigInt();
   }
 
-  set decimals(value: BigInt | null) {
-    if (!value) {
-      this.unset("decimals");
-    } else {
-      this.set("decimals", Value.fromBigInt(<BigInt>value));
-    }
+  set decimals(value: BigInt) {
+    this.set("decimals", Value.fromBigInt(value));
   }
 
   get chainId(): i32 {
@@ -120,21 +96,13 @@ export class Token extends Entity {
     this.set("chainId", Value.fromI32(value));
   }
 
-  get logoURI(): string | null {
+  get logoURI(): string {
     let value = this.get("logoURI");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toString();
-    }
+    return value!.toString();
   }
 
-  set logoURI(value: string | null) {
-    if (!value) {
-      this.unset("logoURI");
-    } else {
-      this.set("logoURI", Value.fromString(<string>value));
-    }
+  set logoURI(value: string) {
+    this.set("logoURI", Value.fromString(value));
   }
 
   get isWhitelisted(): boolean {
@@ -151,6 +119,13 @@ export class Pair extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
+
+    this.set("token0", Value.fromString(""));
+    this.set("token1", Value.fromString(""));
+    this.set("isStable", Value.fromBoolean(false));
+    this.set("totalSupply", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("reserve0", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("reserve1", Value.fromBigDecimal(BigDecimal.zero()));
   }
 
   save(): void {
@@ -179,38 +154,22 @@ export class Pair extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get token0(): string | null {
+  get token0(): string {
     let value = this.get("token0");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toString();
-    }
+    return value!.toString();
   }
 
-  set token0(value: string | null) {
-    if (!value) {
-      this.unset("token0");
-    } else {
-      this.set("token0", Value.fromString(<string>value));
-    }
+  set token0(value: string) {
+    this.set("token0", Value.fromString(value));
   }
 
-  get token1(): string | null {
+  get token1(): string {
     let value = this.get("token1");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toString();
-    }
+    return value!.toString();
   }
 
-  set token1(value: string | null) {
-    if (!value) {
-      this.unset("token1");
-    } else {
-      this.set("token1", Value.fromString(<string>value));
-    }
+  set token1(value: string) {
+    this.set("token1", Value.fromString(value));
   }
 
   get isStable(): boolean {
@@ -222,54 +181,30 @@ export class Pair extends Entity {
     this.set("isStable", Value.fromBoolean(value));
   }
 
-  get totalSupply(): BigDecimal | null {
+  get totalSupply(): BigDecimal {
     let value = this.get("totalSupply");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigDecimal();
-    }
+    return value!.toBigDecimal();
   }
 
-  set totalSupply(value: BigDecimal | null) {
-    if (!value) {
-      this.unset("totalSupply");
-    } else {
-      this.set("totalSupply", Value.fromBigDecimal(<BigDecimal>value));
-    }
+  set totalSupply(value: BigDecimal) {
+    this.set("totalSupply", Value.fromBigDecimal(value));
   }
 
-  get reserve0(): BigDecimal | null {
+  get reserve0(): BigDecimal {
     let value = this.get("reserve0");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigDecimal();
-    }
+    return value!.toBigDecimal();
   }
 
-  set reserve0(value: BigDecimal | null) {
-    if (!value) {
-      this.unset("reserve0");
-    } else {
-      this.set("reserve0", Value.fromBigDecimal(<BigDecimal>value));
-    }
+  set reserve0(value: BigDecimal) {
+    this.set("reserve0", Value.fromBigDecimal(value));
   }
 
-  get reserve1(): BigDecimal | null {
+  get reserve1(): BigDecimal {
     let value = this.get("reserve1");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigDecimal();
-    }
+    return value!.toBigDecimal();
   }
 
-  set reserve1(value: BigDecimal | null) {
-    if (!value) {
-      this.unset("reserve1");
-    } else {
-      this.set("reserve1", Value.fromBigDecimal(<BigDecimal>value));
-    }
+  set reserve1(value: BigDecimal) {
+    this.set("reserve1", Value.fromBigDecimal(value));
   }
 }

@@ -1,5 +1,7 @@
 import { PairCreated } from "../generated/BaseV1Factory/BaseV1Factory"
 import { Pair } from "../generated/schema"
+import { Pair as PairTemplate } from '../generated/templates'
+import { Pair as PairContract } from '../generated/templates/Pair/Pair'
 import { getToken } from './utils/tokens'
 
 /*
@@ -26,10 +28,11 @@ type Token @entity {
 */
 
 export function handlePairCreated(event: PairCreated): void {
-  let pair = Pair.load(event.transaction.from.toHex())
+  const pairAddress = event.transaction.from
 
+  let pair = Pair.load(pairAddress.toHex())
   if (!pair) {
-    pair = new Pair(event.transaction.from.toHex())
+     pair = new Pair(pairAddress.toHex())
   }
 
   const token0 = getToken(event.params.token0)
@@ -44,6 +47,9 @@ export function handlePairCreated(event: PairCreated): void {
 
   pair.token0 = event.params.token0.toHex()
   pair.token1 = event.params.token1.toHex()
+  pair.isStable = event.params.stable
 
   pair.save()
+
+  PairTemplate.create(pairAddress)
 }
