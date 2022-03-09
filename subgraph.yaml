@@ -29,7 +29,7 @@ dataSources:
           file: ./abis/ERC20NameBytes.json
       eventHandlers:
         - event: PairCreated(indexed address,indexed address,bool,address,uint256)
-          handler: handlePairCreated
+          handler: onPairCreated
       file: ./src/Factory.ts
 templates:
   - kind: ethereum/contract
@@ -44,18 +44,9 @@ templates:
       file: ./src/Pair.ts
       entities:
         - Pair
-        - Sync
       abis:
-        - name: BaseV1Factory
-          file: ./abis/BaseV1Factory.json
         - name: Pair
           file: ./node_modules/@sushiswap/core/build/abi/UniswapV2Pair.json
-        - name: ERC20
-          file: ./abis/ERC20.json
-        - name: ERC20SymbolBytes
-          file: ./abis/ERC20SymbolBytes.json
-        - name: ERC20NameBytes
-          file: ./abis/ERC20NameBytes.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: onTransfer

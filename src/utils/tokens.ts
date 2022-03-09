@@ -1,6 +1,7 @@
 // from sushiswap's subgraph
-import { Address, BigInt, log } from '@graphprotocol/graph-ts'
+import { Address, BigInt } from '@graphprotocol/graph-ts'
 import { NULL_CALL_RESULT_VALUE } from '../../packages/constants'
+import { log } from "matchstick-as/assembly/log";
 
 import { ERC20 } from '../../generated/BaseV1Factory/ERC20'
 import { ERC20NameBytes } from '../../generated/BaseV1Factory/ERC20NameBytes'
@@ -8,7 +9,9 @@ import { ERC20SymbolBytes } from '../../generated/BaseV1Factory/ERC20SymbolBytes
 import { Token } from '../../generated/schema'
 
 export function getToken(address: Address): Token {
+  log.info('in getToken', [])
   let token = Token.load(address.toHex())
+  log.info('after load in gettoken', [])
 
   if (token === null) {
     token = new Token(address.toHex())

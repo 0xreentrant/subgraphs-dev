@@ -5,8 +5,10 @@ import { Pair } from '../../generated/schema'
 import { Pair as PairContract } from '../../generated/templates/Pair/Pair'
 import { getToken } from './tokens'
 
-export function getPair(address: Address): Pair | null {
-  let pair = Pair.load(address.toHex())
+export function getPair(
+  address: Address,
+): Pair | null {
+  let pair = Pair.load(address.toHexString())
 
   if (pair === null) {
     const pairContract = PairContract.bind(address)

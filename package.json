@@ -2,6 +2,7 @@
   "name": "3xcalibur",
   "license": "UNLICENSED",
   "scripts": {
+    "test": "graph test",
     "codegen": "graph codegen",
     "build": "graph build",
     "deploy": "graph deploy --node https://api.thegraph.com/deploy/ 0x7e1e/subgraph3xcalibur",
@@ -12,6 +13,7 @@
   "dependencies": {
     "@graphprotocol/graph-cli": "0.27.0",
     "@graphprotocol/graph-ts": "0.24.1",
-    "@sushiswap/core": "^1.4.2"
+    "@sushiswap/core": "^1.4.2",
+    "matchstick-as": "^0.4.0"
   }
 }

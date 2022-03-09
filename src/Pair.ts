@@ -1,5 +1,5 @@
 // adapted from sushiswap/sushiswap-subgraph
-import { Address, BigDecimal, BigInt } from '@graphprotocol/graph-ts'
+import { log, Address, BigDecimal, BigInt } from '@graphprotocol/graph-ts'
 import { ADDRESS_ZERO } from '../packages/constants'
 
 import { Sync as SyncEvent, Transfer as TransferEvent } from '../generated/templates/Pair/Pair'
@@ -7,25 +7,11 @@ import { Pair } from '../generated/schema'
 
 import { getToken } from './utils/tokens'
 import { getPair } from './utils/pairs'
-
-export function exponentToBigDecimal(decimals: BigInt): BigDecimal {
-  let bd = BigDecimal.fromString('1')
-  for (let i = BigInt.fromI32(0); i.lt(decimals as BigInt); i = i.plus(BigInt.fromI32(1))) {
-    bd = bd.times(BigDecimal.fromString('10'))
-  }
-
-  return bd
-}
-
-export function convertTokenToDecimal(tokenAmount: BigInt, exchangeDecimals: BigInt): BigDecimal {
-  if (exchangeDecimals == BigInt.fromI32(0)) {
-    return tokenAmount.toBigDecimal()
-  }
-
-  return tokenAmount.toBigDecimal().div(exponentToBigDecimal(exchangeDecimals))
-}
+import { convertTokenToDecimal } from './utils/math'
 
 export function onTransfer(event: TransferEvent): void {
+  log.info('onTransfer event: {}', [event.address.toHexString()])
+
   const address = event.address
 
   // liquidity token amount being transfered
@@ -43,22 +29,23 @@ export function onTransfer(event: TransferEvent): void {
   }
 
   if (event.params.from == ADDRESS_ZERO) {
-    // update total supply
+    log.info('Mint transfer', [])
+    // mints
     const totalSupply = pair.totalSupply
-
     pair.totalSupply = totalSupply!.plus(value)
     pair.save()
   } else if (event.params.to == ADDRESS_ZERO && event.params.from.toHex() == pair.id) {
+    log.info('Burn transfer', [])
     // burns
-
     const totalSupply = pair.totalSupply
-
     pair.totalSupply = totalSupply!.minus(value)
     pair.save()
   }
 }
 
 export function onSync(event: SyncEvent): void {
+  log.info('onSync event: {}', [event.address.toHexString()])
+
   let pair = getPair(event.address)
 
   if (pair == null) {
@@ -88,6 +75,9 @@ export function onSync(event: SyncEvent): void {
 
   const t1decimals = token1.decimals
   pair.reserve1 = convertTokenToDecimal(event.params.reserve1, t1decimals!)
+
+  log.info('Updated reserves for pair {} {}', [token0.name, token1.name])
+  log.info('reserves: {} {}', [pair.reserve0.toString(), pair.reserve0.toString()])
 
   pair.save()
 }
