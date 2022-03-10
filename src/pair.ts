@@ -11,20 +11,20 @@ import { getPair } from './utils/pairs'
 import { convertTokenToDecimal } from './utils/math'
 
 export function onTransfer(event: TransferEvent): void {
-  log.info('onTransfer event:\n\naddress: {}\nfrom: {}\nto: {}\nvalue: {}\n', [
+  log.info('onTransfer event:\n\naddress: {}\nfrom: {}\nto: {}\namount: {}\n', [
     event.address.toHex(),
     event.params.from.toHex(),
     event.params.to.toHex(),
-    event.params.value.toHex(),
+    event.params.amount.toHex(),
   ])
 
   const address = event.address
 
   // liquidity token amount being transfered
-  const value = event.params.value.divDecimal(BigDecimal.fromString('1e18'))
+  const value = event.params.amount.divDecimal(BigDecimal.fromString('1e18'))
 
   // ignore initial transfers for first adds
-  if (event.params.to == ADDRESS_ZERO && event.params.value.equals(BigInt.fromI32(1000))) {
+  if (event.params.to == ADDRESS_ZERO && event.params.amount.equals(BigInt.fromI32(1000))) {
     return
   }
 

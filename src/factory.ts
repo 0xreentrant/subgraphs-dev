@@ -35,10 +35,9 @@ export function onPairCreated(event: PairCreated): void {
     event.params.pair.toHex(),
   ])
 
-  //const pairAddress = event.transaction.from
   const pairAddress = event.params.pair
 
-  const pair = getPair(event.params.pair)
+  const pair = getPair(pairAddress)
   if (!pair) {
     return
   }
