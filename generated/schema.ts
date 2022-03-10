@@ -120,8 +120,10 @@ export class Pair extends Entity {
     super();
     this.set("id", Value.fromString(id));
 
+    this.set("decimals", Value.fromI32(0));
     this.set("token0", Value.fromString(""));
     this.set("token1", Value.fromString(""));
+    this.set("symbol", Value.fromString(""));
     this.set("isStable", Value.fromBoolean(false));
     this.set("totalSupply", Value.fromBigDecimal(BigDecimal.zero()));
     this.set("reserve0", Value.fromBigDecimal(BigDecimal.zero()));
@@ -154,6 +156,15 @@ export class Pair extends Entity {
     this.set("id", Value.fromString(value));
   }
 
+  get decimals(): i32 {
+    let value = this.get("decimals");
+    return value!.toI32();
+  }
+
+  set decimals(value: i32) {
+    this.set("decimals", Value.fromI32(value));
+  }
+
   get token0(): string {
     let value = this.get("token0");
     return value!.toString();
@@ -170,6 +181,15 @@ export class Pair extends Entity {
 
   set token1(value: string) {
     this.set("token1", Value.fromString(value));
+  }
+
+  get symbol(): string {
+    let value = this.get("symbol");
+    return value!.toString();
+  }
+
+  set symbol(value: string) {
+    this.set("symbol", Value.fromString(value));
   }
 
   get isStable(): boolean {

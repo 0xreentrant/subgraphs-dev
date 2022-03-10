@@ -35,6 +35,8 @@ export function getPair(
     pair.token0 = token0.id
     pair.token1 = token1.id
 
+    pair.symbol = pairContract.symbol()
+    pair.decimals = 18 // this is the constant from the contract
     pair.reserve0 = BIG_DECIMAL_ZERO
     pair.reserve1 = BIG_DECIMAL_ZERO
     pair.totalSupply = BIG_DECIMAL_ZERO
