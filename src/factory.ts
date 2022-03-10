@@ -1,3 +1,5 @@
+import { log } from "matchstick-as/assembly/log";
+
 import { getPair } from './utils/pairs'
 import { PairCreated } from "../generated/BaseV1Factory/BaseV1Factory"
 import { Pair as PairTemplate } from '../generated/templates'
@@ -26,7 +28,15 @@ isWhitelisted: Boolean
  */
 
 export function onPairCreated(event: PairCreated): void {
-  const pairAddress = event.transaction.from
+  log.info('pair created:\n\ntoken0: {}\ntoken1: {}\nstable: {}\npair: {}\n', [
+    event.params.token0.toHex(),
+    event.params.token1.toHex(),
+    event.params.stable.toString(),
+    event.params.pair.toHex(),
+  ])
+
+  //const pairAddress = event.transaction.from
+  const pairAddress = event.params.pair
 
   const pair = getPair(event.params.pair)
   if (!pair) {

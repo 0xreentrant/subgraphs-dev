@@ -30,7 +30,7 @@ dataSources:
       eventHandlers:
         - event: PairCreated(indexed address,indexed address,bool,address,uint256)
           handler: onPairCreated
-      file: ./src/Factory.ts
+      file: ./src/factory.ts
 templates:
   - kind: ethereum/contract
     name: Pair
@@ -41,31 +41,15 @@ templates:
       kind: ethereum/events
       apiVersion: 0.0.5
       language: wasm/assemblyscript
-      file: ./src/Pair.ts
+      file: ./src/pair.ts
       entities:
-        - Bundle
-        - Burn
-        - LiquidityPosition
-        - LiquidityPositionSnapshot
-        - Mint
         - Pair
-        - Swap
-        - Sync
-        - Token
-        - Transaction
-        - User
       abis:
         - name: Pair
           file: ./node_modules/@sushiswap/core/build/abi/UniswapV2Pair.json
         - name: BaseV1Factory
           file: ./abis/BaseV1Factory.json
       eventHandlers:
-        - event: Mint(indexed address,uint256,uint256)
-          handler: onMint
-        - event: Burn(indexed address,uint256,uint256,indexed address)
-          handler: onBurn
-        - event: Swap(indexed address,uint256,uint256,uint256,uint256,indexed address)
-          handler: onSwap
         - event: Transfer(indexed address,indexed address,uint256)
           handler: onTransfer
         - event: Sync(uint112,uint112)
