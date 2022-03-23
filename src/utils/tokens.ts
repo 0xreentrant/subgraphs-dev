@@ -15,6 +15,7 @@ export function getToken(address: Address): Token {
 
   if (token === null) {
     token = new Token(address.toHex())
+    token.chainId = 250
     token.symbol = getSymbol(address)
     token.name = getName(address)
     token.decimals = getDecimals(address)

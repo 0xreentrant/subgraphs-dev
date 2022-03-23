@@ -1,21 +1,29 @@
-type Token @entity {
-  id: ID!
-  address: Bytes!
-  symbol: String!
-  name: String!
-  decimals: BigInt!
-  chainId: Int!
-  logoURI: String!
-  isWhitelisted: Boolean!
-}
-
 type Pair @entity {
   id: ID!
-  token0: Token!
-  token1: Token!
+  symbol: String!
   isStable: Boolean!
   totalSupply: BigDecimal!
+  decimals:Int! 
+  token0: Token!
+  token1: Token!
   reserve0: BigDecimal!
   reserve1: BigDecimal!
 }
 
+type Token @entity {
+  id: ID!
+  address: Bytes!
+  chainId: Int!
+  name: String!
+  symbol: String!
+  decimals: BigInt!
+  logoURI: String!
+  isWhitelisted: Boolean!
+}
+
+type Gauge @entity {
+  id: ID!
+  address: Bytes!
+  decimals: BigInt!
+  totalSupply: BigDecimal!
+}

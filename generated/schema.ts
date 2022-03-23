@@ -11,16 +11,130 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
+export class Pair extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("symbol", Value.fromString(""));
+    this.set("isStable", Value.fromBoolean(false));
+    this.set("totalSupply", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("decimals", Value.fromI32(0));
+    this.set("token0", Value.fromString(""));
+    this.set("token1", Value.fromString(""));
+    this.set("reserve0", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("reserve1", Value.fromBigDecimal(BigDecimal.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Pair entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save Pair entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("Pair", id.toString(), this);
+    }
+  }
+
+  static load(id: string): Pair | null {
+    return changetype<Pair | null>(store.get("Pair", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get symbol(): string {
+    let value = this.get("symbol");
+    return value!.toString();
+  }
+
+  set symbol(value: string) {
+    this.set("symbol", Value.fromString(value));
+  }
+
+  get isStable(): boolean {
+    let value = this.get("isStable");
+    return value!.toBoolean();
+  }
+
+  set isStable(value: boolean) {
+    this.set("isStable", Value.fromBoolean(value));
+  }
+
+  get totalSupply(): BigDecimal {
+    let value = this.get("totalSupply");
+    return value!.toBigDecimal();
+  }
+
+  set totalSupply(value: BigDecimal) {
+    this.set("totalSupply", Value.fromBigDecimal(value));
+  }
+
+  get decimals(): i32 {
+    let value = this.get("decimals");
+    return value!.toI32();
+  }
+
+  set decimals(value: i32) {
+    this.set("decimals", Value.fromI32(value));
+  }
+
+  get token0(): string {
+    let value = this.get("token0");
+    return value!.toString();
+  }
+
+  set token0(value: string) {
+    this.set("token0", Value.fromString(value));
+  }
+
+  get token1(): string {
+    let value = this.get("token1");
+    return value!.toString();
+  }
+
+  set token1(value: string) {
+    this.set("token1", Value.fromString(value));
+  }
+
+  get reserve0(): BigDecimal {
+    let value = this.get("reserve0");
+    return value!.toBigDecimal();
+  }
+
+  set reserve0(value: BigDecimal) {
+    this.set("reserve0", Value.fromBigDecimal(value));
+  }
+
+  get reserve1(): BigDecimal {
+    let value = this.get("reserve1");
+    return value!.toBigDecimal();
+  }
+
+  set reserve1(value: BigDecimal) {
+    this.set("reserve1", Value.fromBigDecimal(value));
+  }
+}
+
 export class Token extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
 
     this.set("address", Value.fromBytes(Bytes.empty()));
-    this.set("symbol", Value.fromString(""));
-    this.set("name", Value.fromString(""));
-    this.set("decimals", Value.fromBigInt(BigInt.zero()));
     this.set("chainId", Value.fromI32(0));
+    this.set("name", Value.fromString(""));
+    this.set("symbol", Value.fromString(""));
+    this.set("decimals", Value.fromBigInt(BigInt.zero()));
     this.set("logoURI", Value.fromString(""));
     this.set("isWhitelisted", Value.fromBoolean(false));
   }
@@ -60,13 +174,13 @@ export class Token extends Entity {
     this.set("address", Value.fromBytes(value));
   }
 
-  get symbol(): string {
-    let value = this.get("symbol");
-    return value!.toString();
+  get chainId(): i32 {
+    let value = this.get("chainId");
+    return value!.toI32();
   }
 
-  set symbol(value: string) {
-    this.set("symbol", Value.fromString(value));
+  set chainId(value: i32) {
+    this.set("chainId", Value.fromI32(value));
   }
 
   get name(): string {
@@ -78,6 +192,15 @@ export class Token extends Entity {
     this.set("name", Value.fromString(value));
   }
 
+  get symbol(): string {
+    let value = this.get("symbol");
+    return value!.toString();
+  }
+
+  set symbol(value: string) {
+    this.set("symbol", Value.fromString(value));
+  }
+
   get decimals(): BigInt {
     let value = this.get("decimals");
     return value!.toBigInt();
@@ -85,15 +208,6 @@ export class Token extends Entity {
 
   set decimals(value: BigInt) {
     this.set("decimals", Value.fromBigInt(value));
-  }
-
-  get chainId(): i32 {
-    let value = this.get("chainId");
-    return value!.toI32();
-  }
-
-  set chainId(value: i32) {
-    this.set("chainId", Value.fromI32(value));
   }
 
   get logoURI(): string {
@@ -115,36 +229,31 @@ export class Token extends Entity {
   }
 }
 
-export class Pair extends Entity {
+export class Gauge extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
 
-    this.set("decimals", Value.fromI32(0));
-    this.set("token0", Value.fromString(""));
-    this.set("token1", Value.fromString(""));
-    this.set("symbol", Value.fromString(""));
-    this.set("isStable", Value.fromBoolean(false));
+    this.set("address", Value.fromBytes(Bytes.empty()));
+    this.set("decimals", Value.fromBigInt(BigInt.zero()));
     this.set("totalSupply", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("reserve0", Value.fromBigDecimal(BigDecimal.zero()));
-    this.set("reserve1", Value.fromBigDecimal(BigDecimal.zero()));
   }
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save Pair entity without an ID");
+    assert(id != null, "Cannot save Gauge entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        "Cannot save Pair entity with non-string ID. " +
+        "Cannot save Gauge entity with non-string ID. " +
           'Considering using .toHex() to convert the "id" to a string.'
       );
-      store.set("Pair", id.toString(), this);
+      store.set("Gauge", id.toString(), this);
     }
   }
 
-  static load(id: string): Pair | null {
-    return changetype<Pair | null>(store.get("Pair", id));
+  static load(id: string): Gauge | null {
+    return changetype<Gauge | null>(store.get("Gauge", id));
   }
 
   get id(): string {
@@ -156,49 +265,22 @@ export class Pair extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get decimals(): i32 {
+  get address(): Bytes {
+    let value = this.get("address");
+    return value!.toBytes();
+  }
+
+  set address(value: Bytes) {
+    this.set("address", Value.fromBytes(value));
+  }
+
+  get decimals(): BigInt {
     let value = this.get("decimals");
-    return value!.toI32();
+    return value!.toBigInt();
   }
 
-  set decimals(value: i32) {
-    this.set("decimals", Value.fromI32(value));
-  }
-
-  get token0(): string {
-    let value = this.get("token0");
-    return value!.toString();
-  }
-
-  set token0(value: string) {
-    this.set("token0", Value.fromString(value));
-  }
-
-  get token1(): string {
-    let value = this.get("token1");
-    return value!.toString();
-  }
-
-  set token1(value: string) {
-    this.set("token1", Value.fromString(value));
-  }
-
-  get symbol(): string {
-    let value = this.get("symbol");
-    return value!.toString();
-  }
-
-  set symbol(value: string) {
-    this.set("symbol", Value.fromString(value));
-  }
-
-  get isStable(): boolean {
-    let value = this.get("isStable");
-    return value!.toBoolean();
-  }
-
-  set isStable(value: boolean) {
-    this.set("isStable", Value.fromBoolean(value));
+  set decimals(value: BigInt) {
+    this.set("decimals", Value.fromBigInt(value));
   }
 
   get totalSupply(): BigDecimal {
@@ -208,23 +290,5 @@ export class Pair extends Entity {
 
   set totalSupply(value: BigDecimal) {
     this.set("totalSupply", Value.fromBigDecimal(value));
-  }
-
-  get reserve0(): BigDecimal {
-    let value = this.get("reserve0");
-    return value!.toBigDecimal();
-  }
-
-  set reserve0(value: BigDecimal) {
-    this.set("reserve0", Value.fromBigDecimal(value));
-  }
-
-  get reserve1(): BigDecimal {
-    let value = this.get("reserve1");
-    return value!.toBigDecimal();
-  }
-
-  set reserve1(value: BigDecimal) {
-    this.set("reserve1", Value.fromBigDecimal(value));
   }
 }

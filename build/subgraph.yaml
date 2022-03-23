@@ -31,6 +31,41 @@ dataSources:
         - event: PairCreated(indexed address,indexed address,bool,address,uint256)
           handler: onPairCreated
       file: BaseV1Factory/BaseV1Factory.wasm
+  - kind: ethereum
+    name: BaseV1Voter
+    network: fantom
+    source:
+      address: "0xDA0eBF84F7A52A06EaeB0409F139D6442262F056"
+      abi: BaseV1Voter
+      startBlock: 30511466
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Pair
+        - Token
+      abis:
+        - name: BaseV1Voter
+          file: BaseV1Voter/abis/BaseV1Voter.json
+        - name: BaseV1Factory
+          file: BaseV1Voter/abis/BaseV1Factory.json
+        - name: Pair
+          file: BaseV1Voter/abis/BaseV1Pair.json
+        - name: Gauge
+          file: BaseV1Voter/abis/BaseV1Gauges.json
+        - name: ERC20
+          file: BaseV1Voter/abis/ERC20.json
+        - name: ERC20SymbolBytes
+          file: BaseV1Voter/abis/ERC20SymbolBytes.json
+        - name: ERC20NameBytes
+          file: BaseV1Voter/abis/ERC20NameBytes.json
+      eventHandlers:
+        - event: Whitelisted(indexed address,indexed address)
+          handler: onWhitelisted
+        - event: GaugeCreated(indexed address,address,indexed address,indexed address)
+          handler: onGaugeCreated
+      file: BaseV1Voter/BaseV1Voter.wasm
 templates:
   - kind: ethereum/contract
     name: Pair

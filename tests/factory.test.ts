@@ -51,8 +51,8 @@ test("Gets address correctly", () => {
   createMockedFunction(toAddr(TOKEN1_CONTRACT), "name", NAME_SIGNATURE).returns([ethereum.Value.fromString("token 1")])
 
   const DECIMALS_SIGNATURE = "decimals():(uint8)"
-  createMockedFunction(toAddr(TOKEN0_CONTRACT), "decimals", DECIMALS_SIGNATURE).returns([ethereum.Value.fromI32(18)])
-  createMockedFunction(toAddr(TOKEN1_CONTRACT), "decimals", DECIMALS_SIGNATURE).returns([ethereum.Value.fromI32(18)])
+  //createMockedFunction(toAddr(TOKEN0_CONTRACT), "decimals", DECIMALS_SIGNATURE).returns([ethereum.Value.fromI32(18)])
+  //createMockedFunction(toAddr(TOKEN1_CONTRACT), "decimals", DECIMALS_SIGNATURE).returns([ethereum.Value.fromI32(18)])
 
   /*
    * main
