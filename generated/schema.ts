@@ -229,31 +229,46 @@ export class Token extends Entity {
   }
 }
 
-export class Gauge extends Entity {
+export class LendingPair extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
 
-    this.set("address", Value.fromBytes(Bytes.empty()));
-    this.set("decimals", Value.fromBigInt(BigInt.zero()));
-    this.set("totalSupply", Value.fromBigDecimal(BigDecimal.zero()));
+    this.set("x", Value.fromBigInt(BigInt.zero()));
+    this.set("y", Value.fromBigInt(BigInt.zero()));
+    this.set("z", Value.fromBigInt(BigInt.zero()));
+    this.set("assetReserve", Value.fromBigInt(BigInt.zero()));
+    this.set("collateralReserve", Value.fromBigInt(BigInt.zero()));
+    this.set("totalLiquidity", Value.fromBigInt(BigInt.zero()));
+    this.set("totalBondPrincipal", Value.fromBigInt(BigInt.zero()));
+    this.set("totalBondInterest", Value.fromBigInt(BigInt.zero()));
+    this.set("totalInsurancePrincipal", Value.fromBigInt(BigInt.zero()));
+    this.set("totalInsuranceInterest", Value.fromBigInt(BigInt.zero()));
+    this.set("totalDebtCreated", Value.fromBigInt(BigInt.zero()));
+    this.set("assetSpot", Value.fromI32(0));
+    this.set("collateralSpot", Value.fromI32(0));
+    this.set("fee", Value.fromI32(0));
+    this.set("protocolFee", Value.fromI32(0));
+    this.set("feeStored", Value.fromBigInt(BigInt.zero()));
+    this.set("protocolFeeStored", Value.fromBigInt(BigInt.zero()));
+    this.set("apr", Value.fromBigDecimal(BigDecimal.zero()));
   }
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save Gauge entity without an ID");
+    assert(id != null, "Cannot save LendingPair entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        "Cannot save Gauge entity with non-string ID. " +
+        "Cannot save LendingPair entity with non-string ID. " +
           'Considering using .toHex() to convert the "id" to a string.'
       );
-      store.set("Gauge", id.toString(), this);
+      store.set("LendingPair", id.toString(), this);
     }
   }
 
-  static load(id: string): Gauge | null {
-    return changetype<Gauge | null>(store.get("Gauge", id));
+  static load(id: string): LendingPair | null {
+    return changetype<LendingPair | null>(store.get("LendingPair", id));
   }
 
   get id(): string {
@@ -265,30 +280,219 @@ export class Gauge extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get address(): Bytes {
-    let value = this.get("address");
-    return value!.toBytes();
-  }
-
-  set address(value: Bytes) {
-    this.set("address", Value.fromBytes(value));
-  }
-
-  get decimals(): BigInt {
-    let value = this.get("decimals");
+  get x(): BigInt {
+    let value = this.get("x");
     return value!.toBigInt();
   }
 
-  set decimals(value: BigInt) {
-    this.set("decimals", Value.fromBigInt(value));
+  set x(value: BigInt) {
+    this.set("x", Value.fromBigInt(value));
   }
 
-  get totalSupply(): BigDecimal {
-    let value = this.get("totalSupply");
+  get y(): BigInt {
+    let value = this.get("y");
+    return value!.toBigInt();
+  }
+
+  set y(value: BigInt) {
+    this.set("y", Value.fromBigInt(value));
+  }
+
+  get z(): BigInt {
+    let value = this.get("z");
+    return value!.toBigInt();
+  }
+
+  set z(value: BigInt) {
+    this.set("z", Value.fromBigInt(value));
+  }
+
+  get assetReserve(): BigInt {
+    let value = this.get("assetReserve");
+    return value!.toBigInt();
+  }
+
+  set assetReserve(value: BigInt) {
+    this.set("assetReserve", Value.fromBigInt(value));
+  }
+
+  get collateralReserve(): BigInt {
+    let value = this.get("collateralReserve");
+    return value!.toBigInt();
+  }
+
+  set collateralReserve(value: BigInt) {
+    this.set("collateralReserve", Value.fromBigInt(value));
+  }
+
+  get totalLiquidity(): BigInt {
+    let value = this.get("totalLiquidity");
+    return value!.toBigInt();
+  }
+
+  set totalLiquidity(value: BigInt) {
+    this.set("totalLiquidity", Value.fromBigInt(value));
+  }
+
+  get totalBondPrincipal(): BigInt {
+    let value = this.get("totalBondPrincipal");
+    return value!.toBigInt();
+  }
+
+  set totalBondPrincipal(value: BigInt) {
+    this.set("totalBondPrincipal", Value.fromBigInt(value));
+  }
+
+  get totalBondInterest(): BigInt {
+    let value = this.get("totalBondInterest");
+    return value!.toBigInt();
+  }
+
+  set totalBondInterest(value: BigInt) {
+    this.set("totalBondInterest", Value.fromBigInt(value));
+  }
+
+  get totalInsurancePrincipal(): BigInt {
+    let value = this.get("totalInsurancePrincipal");
+    return value!.toBigInt();
+  }
+
+  set totalInsurancePrincipal(value: BigInt) {
+    this.set("totalInsurancePrincipal", Value.fromBigInt(value));
+  }
+
+  get totalInsuranceInterest(): BigInt {
+    let value = this.get("totalInsuranceInterest");
+    return value!.toBigInt();
+  }
+
+  set totalInsuranceInterest(value: BigInt) {
+    this.set("totalInsuranceInterest", Value.fromBigInt(value));
+  }
+
+  get totalDebtCreated(): BigInt {
+    let value = this.get("totalDebtCreated");
+    return value!.toBigInt();
+  }
+
+  set totalDebtCreated(value: BigInt) {
+    this.set("totalDebtCreated", Value.fromBigInt(value));
+  }
+
+  get assetSpot(): i32 {
+    let value = this.get("assetSpot");
+    return value!.toI32();
+  }
+
+  set assetSpot(value: i32) {
+    this.set("assetSpot", Value.fromI32(value));
+  }
+
+  get collateralSpot(): i32 {
+    let value = this.get("collateralSpot");
+    return value!.toI32();
+  }
+
+  set collateralSpot(value: i32) {
+    this.set("collateralSpot", Value.fromI32(value));
+  }
+
+  get fee(): i32 {
+    let value = this.get("fee");
+    return value!.toI32();
+  }
+
+  set fee(value: i32) {
+    this.set("fee", Value.fromI32(value));
+  }
+
+  get protocolFee(): i32 {
+    let value = this.get("protocolFee");
+    return value!.toI32();
+  }
+
+  set protocolFee(value: i32) {
+    this.set("protocolFee", Value.fromI32(value));
+  }
+
+  get feeStored(): BigInt {
+    let value = this.get("feeStored");
+    return value!.toBigInt();
+  }
+
+  set feeStored(value: BigInt) {
+    this.set("feeStored", Value.fromBigInt(value));
+  }
+
+  get protocolFeeStored(): BigInt {
+    let value = this.get("protocolFeeStored");
+    return value!.toBigInt();
+  }
+
+  set protocolFeeStored(value: BigInt) {
+    this.set("protocolFeeStored", Value.fromBigInt(value));
+  }
+
+  get apr(): BigDecimal {
+    let value = this.get("apr");
     return value!.toBigDecimal();
   }
 
-  set totalSupply(value: BigDecimal) {
-    this.set("totalSupply", Value.fromBigDecimal(value));
+  set apr(value: BigDecimal) {
+    this.set("apr", Value.fromBigDecimal(value));
+  }
+}
+
+export class CDP extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+
+    this.set("ratio", Value.fromBigInt(BigInt.zero()));
+    this.set("percent", Value.fromBigDecimal(BigDecimal.zero()));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save CDP entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        "Cannot save CDP entity with non-string ID. " +
+          'Considering using .toHex() to convert the "id" to a string.'
+      );
+      store.set("CDP", id.toString(), this);
+    }
+  }
+
+  static load(id: string): CDP | null {
+    return changetype<CDP | null>(store.get("CDP", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get ratio(): BigInt {
+    let value = this.get("ratio");
+    return value!.toBigInt();
+  }
+
+  set ratio(value: BigInt) {
+    this.set("ratio", Value.fromBigInt(value));
+  }
+
+  get percent(): BigDecimal {
+    let value = this.get("percent");
+    return value!.toBigDecimal();
+  }
+
+  set percent(value: BigDecimal) {
+    this.set("percent", Value.fromBigDecimal(value));
   }
 }

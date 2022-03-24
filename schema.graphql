@@ -20,3 +20,31 @@ type Token @entity {
   logoURI: String!
   isWhitelisted: Boolean!
 }
+
+type LendingPair @entity {
+  id: ID!
+  x: BigInt!
+  y: BigInt!
+  z: BigInt!
+  assetReserve: BigInt!
+  collateralReserve: BigInt!
+  totalLiquidity: BigInt!
+  totalBondPrincipal: BigInt!
+  totalBondInterest: BigInt!
+  totalInsurancePrincipal: BigInt!
+  totalInsuranceInterest: BigInt!
+  totalDebtCreated: BigInt!
+  assetSpot: Int!
+  collateralSpot: Int!
+  fee: Int!
+  protocolFee: Int!
+  feeStored: BigInt!
+  protocolFeeStored: BigInt!
+  apr: BigDecimal!
+}
+
+type CDP @entity {
+  id: ID!
+  ratio: BigInt!
+  percent: BigDecimal!
+}

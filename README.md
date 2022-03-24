@@ -49,6 +49,7 @@ yarn run test # run tests with matchstick
 - Function signatures in `subgraph.yaml` and the ABI **must** have the correct types to the contract. That will also reflect in the generated AssemblyScript types. The Solidly contract repo said that the BaseV1Pairs had the same interface as UniswapV2Pairs, but their types and ABI were different. I chased that around for two days until it was clear that that fact was incorrect.
   - Double check that the ABI signatures match the contract.  
   - Generate an ABI with `npx solc <file> --abi` if you need to be sure, or the ABI you got was from etherscan/ftmscan.
+    - If you're trying to generate ABIs and getting the error `File not found inside the base path or any of the include paths`, use the `--include-path` and `--base-path` params to include the location of the imported files
 
 # NOTES:
 
